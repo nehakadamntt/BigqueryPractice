@@ -3,21 +3,21 @@
 --Public Dataset: bigquery-public-data.stackoverflow
 --Table involved: stackoverflow_posts, posts_answers, users
 
-
-
-
+WITH MTS AS(
 SELECT 
-DISTINCT(sp.owner_user_id) AS id_user,
-COUNT(sp.owner_user_id) AS count
-FROM 
-`bigquery-public-data.stackoverflow.stackoverflow_posts` sp
+p.owner_user_id AS id_user,
+FROM
+`bigquery-public-data.stackoverflow.stackoverflow_posts` pa
 JOIN 
-`bigquery-public-data.stackoverflow.posts_answers` pa
-ON
- sp.owner_user_id=pa.owner_user_id
+`bigquery-public-data.stackoverflow.posts_answers` p
+ON pa.accepted_answer_id=p.id
 WHERE 
-sp.accepted_answer_id IS NOT NULL
-GROUP BY id_user,sp.creation_date
-HAVING EXTRACT (YEAR FROM sp.creation_date)=2010
-ORDER BY count DESC 
+pa.accepted_answer_id IS NOT NULL AND
+EXTRACT (YEAR FROM p.creation_date)=2010
+)
+SELECT u.id AS user_id ,COUNT(*) AS count FROM MTS a
+JOIN `bigquery-public-data.stackoverflow.users` u
+ON u.id= a.id_user
+GROUP BY u.id
+ORDER BY count DESC
 LIMIT 10
