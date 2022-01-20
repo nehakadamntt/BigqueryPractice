@@ -13,7 +13,7 @@ JOIN
 ON pa.accepted_answer_id=p.id
 WHERE 
 pa.accepted_answer_id IS NOT NULL AND
-EXTRACT (YEAR FROM p.creation_date)=2010
+EXTRACT (YEAR FROM pa.creation_date)=2010
 )
 SELECT u.id AS user_id ,COUNT(*) AS count FROM MTS a
 JOIN `bigquery-public-data.stackoverflow.users` u
