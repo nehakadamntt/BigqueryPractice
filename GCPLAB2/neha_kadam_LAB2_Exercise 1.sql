@@ -17,10 +17,11 @@ WITH AMT AS
 
 	)
 
-	SELECT * ,RANK()  OVER (PARTITION BY year ORDER BY  Production_Budget DESC,year DESC) as rank FROM MTS WHERE (year BETWEEN  2016 AND 2022)
-
+	SELECT * ,RANK()  OVER (PARTITION BY year ORDER BY  Production_Budget DESC,year DESC) as rank FROM MTS WHERE (year BETWEEN  2016 AND 2020)                                                                                                                                                                                                                                  
+                                                                                                                                                                                                     
 )
-SELECT * FROM AMT WHERE rank<=10 
+SELECT * FROM AMT WHERE rank<=10 order by year DESC                                                                                                                                                             
+
 
 
 
