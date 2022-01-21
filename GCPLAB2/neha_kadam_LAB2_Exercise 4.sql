@@ -6,9 +6,10 @@
 --Table involved: ga_sessions_20170801
 --Tip: ARRAY_AGG functions can be useful
 --(see: https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions)
+--use this to create table using bleow query
 
-CREATE OR REPLACE TABLE `uc1_7.queryResultTable` as
-(
+--CREATE OR REPLACE TABLE `table_name` as(query)
+
 with MTE as (
    select 
    device.browser as browser,
@@ -22,4 +23,4 @@ with MTE as (
 )
  
 select country,ARRAY_AGG(struct(operating_System,browser,rank)) as country_rank from MTE where rank<=3 group by country order by country 
-)
+
